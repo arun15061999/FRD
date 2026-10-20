@@ -1,0 +1,469 @@
+﻿# Module Analysis: community-events-support
+
+Review state: Partial source trace completed for forum thread create/list and support ticket creation; replies/moderation/event workflows pending.
+
+## Findings
+
+Routes and pages are inventoried. Business rules, ownership/moderation, schemas, field validations, lifecycle states, notifications, and persistence mappings have not yet been traced.
+
+## Frontend pages
+
+- src/app/(public)/page.tsx
+- src/app/(public)/about/page.tsx
+- src/app/(public)/become-instructor/page.tsx
+- src/app/(public)/blog/page.tsx
+- src/app/(public)/blog/[slug]/page.tsx
+- src/app/(public)/certificates/verify/page.tsx
+- src/app/(public)/certificates/verify/[code]/page.tsx
+- src/app/(public)/compare/page.tsx
+- src/app/(public)/compare/ceh-vs-oscp/page.tsx
+- src/app/(public)/compare/security-plus-vs-ceh/page.tsx
+- src/app/(public)/courses/page.tsx
+- src/app/(public)/courses/[slug]/page.tsx
+- src/app/(public)/courses/[slug]/offer/page.tsx
+- src/app/(public)/credentials/verify/page.tsx
+- src/app/(public)/credentials/verify/badge/[hash]/page.tsx
+- src/app/(public)/events/page.tsx
+- src/app/(public)/events/[id]/page.tsx
+- src/app/(public)/events/[id]/room/page.tsx
+- src/app/(public)/glossary/page.tsx
+- src/app/(public)/instructors/[id]/page.tsx
+- src/app/(public)/mentors/page.tsx
+- src/app/(public)/newsletter/confirm/page.tsx
+- src/app/(public)/partners/apply/page.tsx
+- src/app/(public)/passport/[token]/page.tsx
+- src/app/(public)/paths/page.tsx
+- src/app/(public)/paths/[slug]/page.tsx
+- src/app/(public)/portfolio/[userId]/page.tsx
+- src/app/(public)/pricing/page.tsx
+- src/app/(public)/privacy/page.tsx
+- src/app/(public)/refund-policy/page.tsx
+- src/app/(public)/search/page.tsx
+- src/app/(public)/security/page.tsx
+- src/app/(public)/store/page.tsx
+- src/app/(public)/store/[slug]/page.tsx
+- src/app/(public)/support/page.tsx
+- src/app/(public)/terms/page.tsx
+- src/app/(public)/tools/career-quiz/page.tsx
+- src/app/(public)/tools/practice-test/page.tsx
+- src/app/(public)/trust/page.tsx
+- src/app/(public)/unsubscribed/page.tsx
+- src/app/dashboard/page.tsx
+- src/app/dashboard/achievements/page.tsx
+- src/app/dashboard/adaptive-path/page.tsx
+- src/app/dashboard/admin/enrollments/page.tsx
+- src/app/dashboard/admin/video-usage/page.tsx
+- src/app/dashboard/ai-tutor/page.tsx
+- src/app/dashboard/analytics/page.tsx
+- src/app/dashboard/assignments/page.tsx
+- src/app/dashboard/assignments/anonymous-grading/page.tsx
+- src/app/dashboard/assignments/[id]/page.tsx
+- src/app/dashboard/assignments/[id]/code/page.tsx
+- src/app/dashboard/assignments/[id]/submissions/[submissionId]/feedback/page.tsx
+- src/app/dashboard/assignments/[id]/view/page.tsx
+- src/app/dashboard/attendance/page.tsx
+- src/app/dashboard/badges/page.tsx
+- src/app/dashboard/blog/page.tsx
+- src/app/dashboard/blog/add/page.tsx
+- src/app/dashboard/blog/[id]/edit/page.tsx
+- src/app/dashboard/calendar/page.tsx
+- src/app/dashboard/calendar-settings/page.tsx
+- src/app/dashboard/catch-up/page.tsx
+- src/app/dashboard/certificate-preview/page.tsx
+- src/app/dashboard/certificates/page.tsx
+- src/app/dashboard/certificates/issue/page.tsx
+- src/app/dashboard/certificates/[id]/appendix/page.tsx
+- src/app/dashboard/chat/page.tsx
+- src/app/dashboard/checkout/cancel/page.tsx
+- src/app/dashboard/checkout/success/page.tsx
+- src/app/dashboard/checkout/upsell/[courseId]/page.tsx
+- src/app/dashboard/checkout/[courseId]/page.tsx
+- src/app/dashboard/clr/page.tsx
+- src/app/dashboard/community/page.tsx
+- src/app/dashboard/community/challenges/page.tsx
+- src/app/dashboard/competencies/page.tsx
+- src/app/dashboard/competencies/tree/page.tsx
+- src/app/dashboard/coupons/page.tsx
+- src/app/dashboard/courses/page.tsx
+- src/app/dashboard/courses/add/page.tsx
+- src/app/dashboard/courses/browse/page.tsx
+- src/app/dashboard/courses/saved/page.tsx
+- src/app/dashboard/courses/[id]/page.tsx
+- src/app/dashboard/courses/[id]/edit/page.tsx
+- src/app/dashboard/courses/[id]/forum/page.tsx
+- src/app/dashboard/courses/[id]/forum/[threadId]/page.tsx
+- src/app/dashboard/courses/[id]/grades/page.tsx
+- src/app/dashboard/courses/[id]/learn/page.tsx
+- src/app/dashboard/courses/[id]/lessons/page.tsx
+- src/app/dashboard/courses/[id]/lessons/[lessonId]/page.tsx
+- src/app/dashboard/courses/[id]/lessons/[lessonId]/forum/page.tsx
+- src/app/dashboard/courses/[id]/prove-it/page.tsx
+- src/app/dashboard/credentials/page.tsx
+- src/app/dashboard/ctf/page.tsx
+- src/app/dashboard/ctf/challenges/[id]/page.tsx
+- src/app/dashboard/ctf/challenges/[id]/edit/page.tsx
+- src/app/dashboard/ctf/create/page.tsx
+- src/app/dashboard/ctf/disclaimer/page.tsx
+- src/app/dashboard/ctf/[id]/page.tsx
+- src/app/dashboard/ctf-teams/page.tsx
+- src/app/dashboard/employer-pathways/page.tsx
+- src/app/dashboard/enrollments/page.tsx
+- src/app/dashboard/enrollments/add/page.tsx
+- src/app/dashboard/enrollments/success/page.tsx
+- src/app/dashboard/events/page.tsx
+- src/app/dashboard/events/create/page.tsx
+- src/app/dashboard/events/registrations/page.tsx
+- src/app/dashboard/events/[id]/page.tsx
+- src/app/dashboard/events/[id]/edit/page.tsx
+- src/app/dashboard/events/[id]/live/page.tsx
+- src/app/dashboard/exams/page.tsx
+- src/app/dashboard/exams/attempts/page.tsx
+- src/app/dashboard/exams/create/page.tsx
+- src/app/dashboard/exams/grading/page.tsx
+- src/app/dashboard/exams/[id]/page.tsx
+- src/app/dashboard/exams/[id]/edit/page.tsx
+- src/app/dashboard/exams/[id]/grade/[attemptId]/page.tsx
+- src/app/dashboard/exams/[id]/questions/page.tsx
+- src/app/dashboard/exams/[id]/results/[attemptId]/page.tsx
+- src/app/dashboard/exams/[id]/take/page.tsx
+- src/app/dashboard/feedback/page.tsx
+- src/app/dashboard/flashcards/page.tsx
+- src/app/dashboard/following/page.tsx
+- src/app/dashboard/forums/page.tsx
+- src/app/dashboard/gamification/page.tsx
+- src/app/dashboard/grades/page.tsx
+- src/app/dashboard/grades/appeals/page.tsx
+- src/app/dashboard/grades/messages/page.tsx
+- src/app/dashboard/grades/what-if/page.tsx
+- src/app/dashboard/guilds/page.tsx
+- src/app/dashboard/invitations/[token]/page.tsx
+- src/app/dashboard/jobs/page.tsx
+- src/app/dashboard/leaderboard/page.tsx
+- src/app/dashboard/learning-debt/page.tsx
+- src/app/dashboard/learning-path/page.tsx
+- src/app/dashboard/live-sessions/page.tsx
+- src/app/dashboard/live-sessions/[id]/join/page.tsx
+- src/app/dashboard/membership/page.tsx
+- src/app/dashboard/membership/billing/page.tsx
+- src/app/dashboard/mentorship/page.tsx
+- src/app/dashboard/mentorship/find/page.tsx
+- src/app/dashboard/mentorship/requests/page.tsx
+- src/app/dashboard/mentorship/stats/page.tsx
+- src/app/dashboard/mentorship/[requestId]/page.tsx
+- src/app/dashboard/momentum/page.tsx
+- src/app/dashboard/my-products/page.tsx
+- src/app/dashboard/notes/page.tsx
+- src/app/dashboard/notifications/page.tsx
+- src/app/dashboard/onboarding/page.tsx
+- src/app/dashboard/orders/page.tsx
+- src/app/dashboard/organizations/page.tsx
+- src/app/dashboard/organizations/[id]/page.tsx
+- src/app/dashboard/peer-reviews/page.tsx
+- src/app/dashboard/peer-reviews/[id]/page.tsx
+- src/app/dashboard/personalization/page.tsx
+- src/app/dashboard/portfolio/page.tsx
+- src/app/dashboard/preferences/email/page.tsx
+- src/app/dashboard/preferences/recommendations/page.tsx
+- src/app/dashboard/products/page.tsx
+- src/app/dashboard/products/create/page.tsx
+- src/app/dashboard/products/[id]/edit/page.tsx
+- src/app/dashboard/products/[id]/reviews/page.tsx
+- src/app/dashboard/profile/page.tsx
+- src/app/dashboard/progress/page.tsx
+- src/app/dashboard/progress/skill-tree/page.tsx
+- src/app/dashboard/recommendations/page.tsx
+- src/app/dashboard/redeem-seat/page.tsx
+- src/app/dashboard/referrals/page.tsx
+- src/app/dashboard/resources/page.tsx
+- src/app/dashboard/resources/add/page.tsx
+- src/app/dashboard/resources/[id]/edit/page.tsx
+- src/app/dashboard/scenarios/page.tsx
+- src/app/dashboard/scenarios/[id]/page.tsx
+- src/app/dashboard/security/devices/page.tsx
+- src/app/dashboard/settings/page.tsx
+- src/app/dashboard/skill-gaps/page.tsx
+- src/app/dashboard/skills/page.tsx
+- src/app/dashboard/students/page.tsx
+- src/app/dashboard/students/add/page.tsx
+- src/app/dashboard/students/[id]/page.tsx
+- src/app/dashboard/students/[id]/edit/page.tsx
+- src/app/dashboard/study-groups/page.tsx
+- src/app/dashboard/study-groups/[id]/page.tsx
+- src/app/dashboard/study-plan/page.tsx
+- src/app/dashboard/support/page.tsx
+- src/app/dashboard/support/create/page.tsx
+- src/app/dashboard/support/refund/page.tsx
+- src/app/dashboard/support/[id]/page.tsx
+- src/app/dashboard/surveys/page.tsx
+- src/app/dashboard/sync-conflicts/page.tsx
+- src/app/dashboard/teachers/[[...slug]]/page.tsx
+- src/app/dashboard/team-exams/page.tsx
+- src/app/dashboard/transactions/page.tsx
+- src/app/dashboard/transactions/add/page.tsx
+- src/app/dashboard/transactions/[id]/page.tsx
+- src/app/instructor/page.tsx
+- src/app/instructor/accessibility/page.tsx
+- src/app/instructor/accessibility/[courseId]/page.tsx
+- src/app/instructor/affiliates/page.tsx
+- src/app/instructor/affiliates/portal/page.tsx
+- src/app/instructor/ai-suggestions/page.tsx
+- src/app/instructor/analytics/page.tsx
+- src/app/instructor/analytics/courses/[courseId]/page.tsx
+- src/app/instructor/analytics/predictive/page.tsx
+- src/app/instructor/assignments/page.tsx
+- src/app/instructor/assignments/create/page.tsx
+- src/app/instructor/assignments/grading-queue/page.tsx
+- src/app/instructor/assignments/[id]/appeals/page.tsx
+- src/app/instructor/assignments/[id]/code-config/page.tsx
+- src/app/instructor/assignments/[id]/edit/page.tsx
+- src/app/instructor/assignments/[id]/extensions/page.tsx
+- src/app/instructor/assignments/[id]/peer-reviews/page.tsx
+- src/app/instructor/assignments/[id]/plagiarism/page.tsx
+- src/app/instructor/assignments/[id]/rubric/page.tsx
+- src/app/instructor/assignments/[id]/submissions/page.tsx
+- src/app/instructor/assignments/[id]/submissions/[submissionId]/page.tsx
+- src/app/instructor/assignments/[id]/submissions/[submissionId]/grade/page.tsx
+- src/app/instructor/attendance/page.tsx
+- src/app/instructor/blog/page.tsx
+- src/app/instructor/blog/new/page.tsx
+- src/app/instructor/blog/[id]/edit/page.tsx
+- src/app/instructor/bulk-operations/page.tsx
+- src/app/instructor/cart-recovery/page.tsx
+- src/app/instructor/cart-recovery/settings/page.tsx
+- src/app/instructor/certificates/page.tsx
+- src/app/instructor/chat/page.tsx
+- src/app/instructor/checkout-offers/page.tsx
+- src/app/instructor/coauthor-invitations/page.tsx
+- src/app/instructor/command-center/page.tsx
+- src/app/instructor/community-challenges/page.tsx
+- src/app/instructor/competencies/page.tsx
+- src/app/instructor/competencies/triggers/page.tsx
+- src/app/instructor/content-gap-reports/page.tsx
+- src/app/instructor/coupons/page.tsx
+- src/app/instructor/course-import-jobs/page.tsx
+- src/app/instructor/course-templates/page.tsx
+- src/app/instructor/courses/page.tsx
+- src/app/instructor/courses/freshness/page.tsx
+- src/app/instructor/courses/new/page.tsx
+- src/app/instructor/courses/[id]/page.tsx
+- src/app/instructor/courses/[id]/analytics/page.tsx
+- src/app/instructor/courses/[id]/assignment-groups/page.tsx
+- src/app/instructor/courses/[id]/broadcast/page.tsx
+- src/app/instructor/courses/[id]/coauthors/page.tsx
+- src/app/instructor/courses/[id]/edit/page.tsx
+- src/app/instructor/courses/[id]/exams/[examId]/proctoring/page.tsx
+- src/app/instructor/courses/[id]/forum/page.tsx
+- src/app/instructor/courses/[id]/forum/[threadId]/page.tsx
+- src/app/instructor/courses/[id]/friction-map/page.tsx
+- src/app/instructor/courses/[id]/gamification/page.tsx
+- src/app/instructor/courses/[id]/grade-settings/page.tsx
+- src/app/instructor/courses/[id]/grading/page.tsx
+- src/app/instructor/courses/[id]/labs/page.tsx
+- src/app/instructor/courses/[id]/lessons/page.tsx
+- src/app/instructor/courses/[id]/lessons/[lessonId]/interactive/page.tsx
+- src/app/instructor/courses/[id]/practice-labs/page.tsx
+- src/app/instructor/courses/[id]/preview/page.tsx
+- src/app/instructor/courses/[id]/sales-page/page.tsx
+- src/app/instructor/courses/[id]/video-intelligence/page.tsx
+- src/app/instructor/ctf/page.tsx
+- src/app/instructor/ctf/challenges/page.tsx
+- src/app/instructor/ctf/challenges/new/page.tsx
+- src/app/instructor/ctf/competitions/new/page.tsx
+- src/app/instructor/ctf/competitions/[id]/page.tsx
+- src/app/instructor/ctf/[id]/page.tsx
+- src/app/instructor/dashboard/page.tsx
+- src/app/instructor/dashboard/command-center/page.tsx
+- src/app/instructor/earnings/page.tsx
+- src/app/instructor/email-campaigns/page.tsx
+- src/app/instructor/email-campaigns/new/page.tsx
+- src/app/instructor/exams/page.tsx
+- src/app/instructor/exams/create/page.tsx
+- src/app/instructor/exams/grading-queue/page.tsx
+- src/app/instructor/exams/proctoring/page.tsx
+- src/app/instructor/exams/question-analysis/page.tsx
+- src/app/instructor/exams/results/page.tsx
+- src/app/instructor/exams/[id]/page.tsx
+- src/app/instructor/exams/[id]/accommodations/page.tsx
+- src/app/instructor/exams/[id]/analytics/page.tsx
+- src/app/instructor/exams/[id]/appeals/page.tsx
+- src/app/instructor/exams/[id]/attempts/[attemptId]/grade/page.tsx
+- src/app/instructor/exams/[id]/results/page.tsx
+- src/app/instructor/exams/[id]/team-sessions/page.tsx
+- src/app/instructor/feedback/page.tsx
+- src/app/instructor/forums/page.tsx
+- src/app/instructor/friction-map/page.tsx
+- src/app/instructor/friction-map/[courseId]/page.tsx
+- src/app/instructor/grading/page.tsx
+- src/app/instructor/grading/anonymous/page.tsx
+- src/app/instructor/grading/messages/page.tsx
+- src/app/instructor/learning-funnel/page.tsx
+- src/app/instructor/learning-objectives/page.tsx
+- src/app/instructor/learning-objectives/create/page.tsx
+- src/app/instructor/learning-paths/page.tsx
+- src/app/instructor/learning-paths/[id]/page.tsx
+- src/app/instructor/live-sessions/page.tsx
+- src/app/instructor/live-sessions/attendance/page.tsx
+- src/app/instructor/live-sessions/course/page.tsx
+- src/app/instructor/live-sessions/[id]/classroom/page.tsx
+- src/app/instructor/live-sessions/[id]/manage/page.tsx
+- src/app/instructor/live-sessions/[id]/stream/page.tsx
+- src/app/instructor/lms-integrations/page.tsx
+- src/app/instructor/marketplace/page.tsx
+- src/app/instructor/mentorship/page.tsx
+- src/app/instructor/mentorship/profile/page.tsx
+- src/app/instructor/mentorship/[requestId]/page.tsx
+- src/app/instructor/micro-credentials/page.tsx
+- src/app/instructor/my-learning/page.tsx
+- src/app/instructor/peer-reviews/page.tsx
+- src/app/instructor/peer-reviews/auto-assign/page.tsx
+- src/app/instructor/peer-reviews/moderation/page.tsx
+- src/app/instructor/products/page.tsx
+- src/app/instructor/products/manage/page.tsx
+- src/app/instructor/products/new/page.tsx
+- src/app/instructor/products/[id]/analytics/page.tsx
+- src/app/instructor/profile/page.tsx
+- src/app/instructor/question-bank/page.tsx
+- src/app/instructor/quizzes/page.tsx
+- src/app/instructor/reports/page.tsx
+- src/app/instructor/resources/page.tsx
+- src/app/instructor/resources/add/page.tsx
+- src/app/instructor/revenue-insights/page.tsx
+- src/app/instructor/reviews/page.tsx
+- src/app/instructor/rubrics/page.tsx
+- src/app/instructor/rubrics/create/page.tsx
+- src/app/instructor/rubrics/library/page.tsx
+- src/app/instructor/rubrics/[id]/edit/page.tsx
+- src/app/instructor/sales/page.tsx
+- src/app/instructor/scenarios/page.tsx
+- src/app/instructor/scenarios/create/page.tsx
+- src/app/instructor/scenarios/[id]/page.tsx
+- src/app/instructor/scenarios/[id]/sessions/page.tsx
+- src/app/instructor/settings/page.tsx
+- src/app/instructor/settings/audit-trail/page.tsx
+- src/app/instructor/students/page.tsx
+- src/app/instructor/students/[id]/page.tsx
+- src/app/instructor/students-at-risk/page.tsx
+- src/app/instructor/study-groups/page.tsx
+- src/app/instructor/study-groups/[id]/page.tsx
+- src/app/instructor/support/page.tsx
+- src/app/instructor/support/create/page.tsx
+- src/app/instructor/support/[id]/page.tsx
+- src/app/instructor/surveys/page.tsx
+- src/app/instructor/verification/page.tsx
+- src/app/instructor/webinars/page.tsx
+- src/app/learner/adaptive-path/page.tsx
+- src/app/learner/credentials/page.tsx
+- src/app/learner/gamification/page.tsx
+- src/app/learner/labs/page.tsx
+- src/app/learner/labs/[id]/page.tsx
+- src/app/learner/mentorship/page.tsx
+- src/app/learner/momentum/page.tsx
+- src/app/learner/skill-gaps/page.tsx
+- src/app/live/[id]/page.tsx
+
+## API route files and methods
+
+- src/app/api/v1/chat/allowed-contacts/route.ts — GET
+- src/app/api/v1/chat/attachments/route.ts — GET, POST
+- src/app/api/v1/chat/blocks/route.ts — DELETE, GET, POST
+- src/app/api/v1/chat/call/route.ts — POST
+- src/app/api/v1/chat/conversations/route.ts — GET
+- src/app/api/v1/chat/conversations/[id]/read/route.ts — POST
+- src/app/api/v1/chat/conversations/[id]/report/route.ts — POST
+- src/app/api/v1/chat/messages/route.ts — GET, POST
+- src/app/api/v1/chat/messages/read-all/route.ts — POST
+- src/app/api/v1/chat/messages/[id]/route.ts — PATCH
+- src/app/api/v1/community/buddy/route.ts — GET, POST
+- src/app/api/v1/community/challenges/route.ts — GET, POST
+- src/app/api/v1/community/challenges/[id]/close/route.ts — POST
+- src/app/api/v1/community/challenges/[id]/entries/route.ts — GET, PATCH
+- src/app/api/v1/community/challenges/[id]/join/route.ts — POST
+- src/app/api/v1/community/challenges/[id]/leaderboard/route.ts — GET
+- src/app/api/v1/events/route.ts — GET, POST
+- src/app/api/v1/events/my-registrations/route.ts — GET
+- src/app/api/v1/events/[id]/route.ts — DELETE, GET, PATCH
+- src/app/api/v1/events/[id]/breakouts/route.ts — GET, POST
+- src/app/api/v1/events/[id]/breakouts/[roomId]/route.ts — DELETE, PATCH
+- src/app/api/v1/events/[id]/chat/route.ts — DELETE, GET, POST
+- src/app/api/v1/events/[id]/checkout/route.ts — GET, POST
+- src/app/api/v1/events/[id]/dyte-token/route.ts — POST
+- src/app/api/v1/events/[id]/meeting/route.ts — POST
+- src/app/api/v1/events/[id]/polls/route.ts — GET, POST
+- src/app/api/v1/events/[id]/polls/[pollId]/route.ts — PATCH
+- src/app/api/v1/events/[id]/polls/[pollId]/vote/route.ts — POST
+- src/app/api/v1/events/[id]/qa/route.ts — GET, POST
+- src/app/api/v1/events/[id]/qa/[qaId]/upvote/route.ts — DELETE, POST
+- src/app/api/v1/events/[id]/register/route.ts — DELETE, POST
+- src/app/api/v1/events/[id]/registrations/route.ts — GET
+- src/app/api/v1/events/[id]/whiteboard/route.ts — GET, PATCH
+- src/app/api/v1/forum/boards/route.ts — GET
+- src/app/api/v1/forum/moderation/route.ts — GET, POST
+- src/app/api/v1/forum/moderation/hidden-posts/route.ts — GET
+- src/app/api/v1/forum/moderation/unhide/route.ts — POST
+- src/app/api/v1/forum/replies/route.ts — GET, POST
+- src/app/api/v1/forum/replies/[id]/route.ts — DELETE, PATCH
+- src/app/api/v1/forum/reports/route.ts — GET, POST
+- src/app/api/v1/forum/threads/route.ts — GET, POST
+- src/app/api/v1/forum/threads/[id]/route.ts — DELETE, GET, PATCH
+- src/app/api/v1/forum/threads/[id]/accepted-answer/route.ts — PATCH
+- src/app/api/v1/forum/threads/[id]/subscribe/route.ts — DELETE, GET, POST
+- src/app/api/v1/groups/[id]/route.ts — DELETE
+- src/app/api/v1/groups/[id]/members/route.ts — DELETE, POST
+- src/app/api/v1/groups/[id]/submissions/route.ts — GET, POST
+- src/app/api/v1/guilds/route.ts — GET, POST
+- src/app/api/v1/guilds/join/route.ts — POST
+- src/app/api/v1/guilds/leave/route.ts — POST
+- src/app/api/v1/guilds/[id]/route.ts — DELETE, GET
+- src/app/api/v1/guilds/[id]/activity/route.ts — GET
+- src/app/api/v1/guilds/[id]/members/route.ts — GET, POST
+- src/app/api/v1/guilds/[id]/quests/route.ts — GET, POST
+- src/app/api/v1/kudos/route.ts — GET, POST
+- src/app/api/v1/kudos/[id]/route.ts — GET
+- src/app/api/v1/mentorship/attachments/route.ts — GET, POST
+- src/app/api/v1/mentorship/feedback/route.ts — GET, POST
+- src/app/api/v1/mentorship/instructor-queue/route.ts — GET
+- src/app/api/v1/mentorship/match/route.ts — GET, POST
+- src/app/api/v1/mentorship/mentors/route.ts — GET, POST
+- src/app/api/v1/mentorship/mentors/stats/route.ts — GET
+- src/app/api/v1/mentorship/mentors/[userId]/route.ts — GET
+- src/app/api/v1/mentorship/mentors/[userId]/reviews/route.ts — GET, POST
+- src/app/api/v1/mentorship/recordings/route.ts — GET
+- src/app/api/v1/mentorship/recordings/[id]/transcribe/route.ts — POST
+- src/app/api/v1/mentorship/recordings/[id]/transcript/route.ts — GET
+- src/app/api/v1/mentorship/requests/route.ts — GET, POST
+- src/app/api/v1/mentorship/requests/[id]/route.ts — DELETE, GET, PATCH
+- src/app/api/v1/mentorship/requests/[id]/calls/route.ts — POST
+- src/app/api/v1/mentorship/requests/[id]/messages/route.ts — GET, POST
+- src/app/api/v1/mentorship/requests/[id]/notes/route.ts — PATCH
+- src/app/api/v1/mentorship/requests/[id]/tasks/route.ts — GET, POST
+- src/app/api/v1/mentorship/requests/[id]/tasks/[taskId]/route.ts — DELETE, PATCH
+- src/app/api/v1/mentorship/sessions/route.ts — GET, POST
+- src/app/api/v1/mentorship/sessions/[id]/route.ts — PATCH
+- src/app/api/v1/support/tickets/route.ts — GET, POST
+- src/app/api/v1/support/tickets/[id]/route.ts — DELETE, GET, PATCH
+- src/app/api/v1/support/tickets/[id]/attachments/route.ts — GET, POST
+- src/app/api/v1/support/tickets/[id]/escalate/route.ts — POST
+- src/app/api/v1/support/tickets/[id]/messages/route.ts — GET, POST
+- src/app/api/v1/surveys/route.ts — GET, POST
+- src/app/api/v1/surveys/available/route.ts — GET
+- src/app/api/v1/surveys/[id]/route.ts — DELETE, GET, PATCH
+- src/app/api/v1/surveys/[id]/questions/route.ts — DELETE, POST
+- src/app/api/v1/surveys/[id]/respond/route.ts — POST
+- src/app/api/v1/surveys/[id]/results/route.ts — GET
+
+## Validation, fields, data and workflow coverage
+
+Pending for complete module sign-off: enumerate every screen action; extract route schemas/request/response; trace service calls and table writes; compare Zod rules with UI and migration constraints; record success/error/alternate flows; map tests to stable IDs.
+
+## Dependencies and evidence
+
+Inventory source: docs/frd-analysis/00-repository-inventory.md. Core shared evidence includes src/lib/api/with-api.ts, src/lib/roles.ts and Supabase migrations/RLS. Domain-specific source evidence is cited by repository-relative route and schema paths in Findings and FRD.
+
+## Unresolved questions
+
+Runtime configuration, deployed feature toggles, external-provider response behavior, and uninspected screen/database details remain unverified. No tests are claimed as executed.
+
+## Partial cross-layer findings
+
+* Forum `GET /api/v1/forum/threads` requires `course_id` unless `scope=mine`; validates course/lesson UUID, `sort` against `FORUM_SORTS`, category against configured categories, and supports lesson/search/unanswered/paging. Course and lesson access are checked. `POST` is available to admin/teacher/student, uses a write rate limiter and idempotency, validates normalized plain text (title 5–160, body 10–20,000, category `question|general|feedback|bug`, optional lesson UUID), confirms course access and lesson-course relation, creates thread, auto-subscribes author best-effort, and notifies course teacher best-effort. Evidence: `src/app/api/v1/forum/threads/route.ts:28-176`, `src/lib/validators/forum.schemas.ts:3-27`.
+* Support ticket creation validates subject 5–200, priority `low|medium|high` default medium, message 10–5,000; limit is five tickets/day/user. It inserts ticket and initial message; if message insert fails, deletes ticket to avoid an empty ticket; admin notification and audit follow. Evidence: `src/app/api/v1/support/tickets/route.ts:75+`, `src/lib/validators/platform.schemas.ts:4-8`.

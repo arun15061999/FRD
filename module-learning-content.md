@@ -1,0 +1,330 @@
+﻿# Module Analysis: learning-content
+
+Review state: Partial detailed trace.
+
+## Findings
+
+Course catalog supports search/category/level/featured/teacher filters, four sorts, bounded pagination, cache for eligible public queries, deleted/published/approval/availability conditions. Course create validates schema, fills draft fallbacks, enforces publish prerequisites and admin teacher existence, handles duplicate conflict, and audits success.
+
+## Frontend pages
+
+- src/app/(public)/page.tsx
+- src/app/(public)/about/page.tsx
+- src/app/(public)/become-instructor/page.tsx
+- src/app/(public)/blog/page.tsx
+- src/app/(public)/blog/[slug]/page.tsx
+- src/app/(public)/certificates/verify/page.tsx
+- src/app/(public)/certificates/verify/[code]/page.tsx
+- src/app/(public)/compare/page.tsx
+- src/app/(public)/compare/ceh-vs-oscp/page.tsx
+- src/app/(public)/compare/security-plus-vs-ceh/page.tsx
+- src/app/(public)/courses/page.tsx
+- src/app/(public)/courses/[slug]/page.tsx
+- src/app/(public)/courses/[slug]/offer/page.tsx
+- src/app/(public)/credentials/verify/page.tsx
+- src/app/(public)/credentials/verify/badge/[hash]/page.tsx
+- src/app/(public)/events/page.tsx
+- src/app/(public)/events/[id]/page.tsx
+- src/app/(public)/events/[id]/room/page.tsx
+- src/app/(public)/glossary/page.tsx
+- src/app/(public)/instructors/[id]/page.tsx
+- src/app/(public)/mentors/page.tsx
+- src/app/(public)/newsletter/confirm/page.tsx
+- src/app/(public)/partners/apply/page.tsx
+- src/app/(public)/passport/[token]/page.tsx
+- src/app/(public)/paths/page.tsx
+- src/app/(public)/paths/[slug]/page.tsx
+- src/app/(public)/portfolio/[userId]/page.tsx
+- src/app/(public)/pricing/page.tsx
+- src/app/(public)/privacy/page.tsx
+- src/app/(public)/refund-policy/page.tsx
+- src/app/(public)/search/page.tsx
+- src/app/(public)/security/page.tsx
+- src/app/(public)/store/page.tsx
+- src/app/(public)/store/[slug]/page.tsx
+- src/app/(public)/support/page.tsx
+- src/app/(public)/terms/page.tsx
+- src/app/(public)/tools/career-quiz/page.tsx
+- src/app/(public)/tools/practice-test/page.tsx
+- src/app/(public)/trust/page.tsx
+- src/app/(public)/unsubscribed/page.tsx
+- src/app/courses/[slug]/forum/page.tsx
+- src/app/courses/[slug]/forum/thread/[id]/page.tsx
+- src/app/courses/[slug]/preview/[lessonId]/page.tsx
+- src/app/dashboard/page.tsx
+- src/app/dashboard/achievements/page.tsx
+- src/app/dashboard/adaptive-path/page.tsx
+- src/app/dashboard/admin/enrollments/page.tsx
+- src/app/dashboard/admin/video-usage/page.tsx
+- src/app/dashboard/ai-tutor/page.tsx
+- src/app/dashboard/analytics/page.tsx
+- src/app/dashboard/assignments/page.tsx
+- src/app/dashboard/assignments/anonymous-grading/page.tsx
+- src/app/dashboard/assignments/[id]/page.tsx
+- src/app/dashboard/assignments/[id]/code/page.tsx
+- src/app/dashboard/assignments/[id]/submissions/[submissionId]/feedback/page.tsx
+- src/app/dashboard/assignments/[id]/view/page.tsx
+- src/app/dashboard/attendance/page.tsx
+- src/app/dashboard/badges/page.tsx
+- src/app/dashboard/blog/page.tsx
+- src/app/dashboard/blog/add/page.tsx
+- src/app/dashboard/blog/[id]/edit/page.tsx
+- src/app/dashboard/calendar/page.tsx
+- src/app/dashboard/calendar-settings/page.tsx
+- src/app/dashboard/catch-up/page.tsx
+- src/app/dashboard/certificate-preview/page.tsx
+- src/app/dashboard/certificates/page.tsx
+- src/app/dashboard/certificates/issue/page.tsx
+- src/app/dashboard/certificates/[id]/appendix/page.tsx
+- src/app/dashboard/chat/page.tsx
+- src/app/dashboard/checkout/cancel/page.tsx
+- src/app/dashboard/checkout/success/page.tsx
+- src/app/dashboard/checkout/upsell/[courseId]/page.tsx
+- src/app/dashboard/checkout/[courseId]/page.tsx
+- src/app/dashboard/clr/page.tsx
+- src/app/dashboard/community/page.tsx
+- src/app/dashboard/community/challenges/page.tsx
+- src/app/dashboard/competencies/page.tsx
+- src/app/dashboard/competencies/tree/page.tsx
+- src/app/dashboard/coupons/page.tsx
+- src/app/dashboard/courses/page.tsx
+- src/app/dashboard/courses/add/page.tsx
+- src/app/dashboard/courses/browse/page.tsx
+- src/app/dashboard/courses/saved/page.tsx
+- src/app/dashboard/courses/[id]/page.tsx
+- src/app/dashboard/courses/[id]/edit/page.tsx
+- src/app/dashboard/courses/[id]/forum/page.tsx
+- src/app/dashboard/courses/[id]/forum/[threadId]/page.tsx
+- src/app/dashboard/courses/[id]/grades/page.tsx
+- src/app/dashboard/courses/[id]/learn/page.tsx
+- src/app/dashboard/courses/[id]/lessons/page.tsx
+- src/app/dashboard/courses/[id]/lessons/[lessonId]/page.tsx
+- src/app/dashboard/courses/[id]/lessons/[lessonId]/forum/page.tsx
+- src/app/dashboard/courses/[id]/prove-it/page.tsx
+- src/app/dashboard/credentials/page.tsx
+- src/app/dashboard/ctf/page.tsx
+- src/app/dashboard/ctf/challenges/[id]/page.tsx
+- src/app/dashboard/ctf/challenges/[id]/edit/page.tsx
+- src/app/dashboard/ctf/create/page.tsx
+- src/app/dashboard/ctf/disclaimer/page.tsx
+- src/app/dashboard/ctf/[id]/page.tsx
+- src/app/dashboard/ctf-teams/page.tsx
+- src/app/dashboard/employer-pathways/page.tsx
+- src/app/dashboard/enrollments/page.tsx
+- src/app/dashboard/enrollments/add/page.tsx
+- src/app/dashboard/enrollments/success/page.tsx
+- src/app/dashboard/events/page.tsx
+- src/app/dashboard/events/create/page.tsx
+- src/app/dashboard/events/registrations/page.tsx
+- src/app/dashboard/events/[id]/page.tsx
+- src/app/dashboard/events/[id]/edit/page.tsx
+- src/app/dashboard/events/[id]/live/page.tsx
+- src/app/dashboard/exams/page.tsx
+- src/app/dashboard/exams/attempts/page.tsx
+- src/app/dashboard/exams/create/page.tsx
+- src/app/dashboard/exams/grading/page.tsx
+- src/app/dashboard/exams/[id]/page.tsx
+- src/app/dashboard/exams/[id]/edit/page.tsx
+- src/app/dashboard/exams/[id]/grade/[attemptId]/page.tsx
+- src/app/dashboard/exams/[id]/questions/page.tsx
+- src/app/dashboard/exams/[id]/results/[attemptId]/page.tsx
+- src/app/dashboard/exams/[id]/take/page.tsx
+- src/app/dashboard/feedback/page.tsx
+- src/app/dashboard/flashcards/page.tsx
+- src/app/dashboard/following/page.tsx
+- src/app/dashboard/forums/page.tsx
+- src/app/dashboard/gamification/page.tsx
+- src/app/dashboard/grades/page.tsx
+- src/app/dashboard/grades/appeals/page.tsx
+- src/app/dashboard/grades/messages/page.tsx
+- src/app/dashboard/grades/what-if/page.tsx
+- src/app/dashboard/guilds/page.tsx
+- src/app/dashboard/invitations/[token]/page.tsx
+- src/app/dashboard/jobs/page.tsx
+- src/app/dashboard/leaderboard/page.tsx
+- src/app/dashboard/learning-debt/page.tsx
+- src/app/dashboard/learning-path/page.tsx
+- src/app/dashboard/live-sessions/page.tsx
+- src/app/dashboard/live-sessions/[id]/join/page.tsx
+- src/app/dashboard/membership/page.tsx
+- src/app/dashboard/membership/billing/page.tsx
+- src/app/dashboard/mentorship/page.tsx
+- src/app/dashboard/mentorship/find/page.tsx
+- src/app/dashboard/mentorship/requests/page.tsx
+- src/app/dashboard/mentorship/stats/page.tsx
+- src/app/dashboard/mentorship/[requestId]/page.tsx
+- src/app/dashboard/momentum/page.tsx
+- src/app/dashboard/my-products/page.tsx
+- src/app/dashboard/notes/page.tsx
+- src/app/dashboard/notifications/page.tsx
+- src/app/dashboard/onboarding/page.tsx
+- src/app/dashboard/orders/page.tsx
+- src/app/dashboard/organizations/page.tsx
+- src/app/dashboard/organizations/[id]/page.tsx
+- src/app/dashboard/peer-reviews/page.tsx
+- src/app/dashboard/peer-reviews/[id]/page.tsx
+- src/app/dashboard/personalization/page.tsx
+- src/app/dashboard/portfolio/page.tsx
+- src/app/dashboard/preferences/email/page.tsx
+- src/app/dashboard/preferences/recommendations/page.tsx
+- src/app/dashboard/products/page.tsx
+- src/app/dashboard/products/create/page.tsx
+- src/app/dashboard/products/[id]/edit/page.tsx
+- src/app/dashboard/products/[id]/reviews/page.tsx
+- src/app/dashboard/profile/page.tsx
+- src/app/dashboard/progress/page.tsx
+- src/app/dashboard/progress/skill-tree/page.tsx
+- src/app/dashboard/recommendations/page.tsx
+- src/app/dashboard/redeem-seat/page.tsx
+- src/app/dashboard/referrals/page.tsx
+- src/app/dashboard/resources/page.tsx
+- src/app/dashboard/resources/add/page.tsx
+- src/app/dashboard/resources/[id]/edit/page.tsx
+- src/app/dashboard/scenarios/page.tsx
+- src/app/dashboard/scenarios/[id]/page.tsx
+- src/app/dashboard/security/devices/page.tsx
+- src/app/dashboard/settings/page.tsx
+- src/app/dashboard/skill-gaps/page.tsx
+- src/app/dashboard/skills/page.tsx
+- src/app/dashboard/students/page.tsx
+- src/app/dashboard/students/add/page.tsx
+- src/app/dashboard/students/[id]/page.tsx
+- src/app/dashboard/students/[id]/edit/page.tsx
+- src/app/dashboard/study-groups/page.tsx
+- src/app/dashboard/study-groups/[id]/page.tsx
+- src/app/dashboard/study-plan/page.tsx
+- src/app/dashboard/support/page.tsx
+- src/app/dashboard/support/create/page.tsx
+- src/app/dashboard/support/refund/page.tsx
+- src/app/dashboard/support/[id]/page.tsx
+- src/app/dashboard/surveys/page.tsx
+- src/app/dashboard/sync-conflicts/page.tsx
+- src/app/dashboard/teachers/[[...slug]]/page.tsx
+- src/app/dashboard/team-exams/page.tsx
+- src/app/dashboard/transactions/page.tsx
+- src/app/dashboard/transactions/add/page.tsx
+- src/app/dashboard/transactions/[id]/page.tsx
+- src/app/learner/adaptive-path/page.tsx
+- src/app/learner/credentials/page.tsx
+- src/app/learner/gamification/page.tsx
+- src/app/learner/labs/page.tsx
+- src/app/learner/labs/[id]/page.tsx
+- src/app/learner/mentorship/page.tsx
+- src/app/learner/momentum/page.tsx
+- src/app/learner/skill-gaps/page.tsx
+- src/app/offline/courses/[id]/page.tsx
+
+## API route files and methods
+
+- src/app/api/v1/catch-up-cards/route.ts — GET
+- src/app/api/v1/catch-up-cards/[id]/read/route.ts — POST
+- src/app/api/v1/categories/route.ts — GET, POST
+- src/app/api/v1/categories/[id]/route.ts — DELETE, PATCH
+- src/app/api/v1/categories/[id]/reorder/route.ts — POST
+- src/app/api/v1/concepts/[concept_id]/prerequisites/route.ts — GET
+- src/app/api/v1/courses/route.ts — GET, POST
+- src/app/api/v1/courses/prerequisites/route.ts — DELETE, GET, POST
+- src/app/api/v1/courses/revisions/pending/route.ts — GET
+- src/app/api/v1/courses/revisions/[revisionId]/route.ts — GET
+- src/app/api/v1/courses/weights/route.ts — DELETE, GET, POST
+- src/app/api/v1/courses/[id]/route.ts — DELETE, GET, PATCH
+- src/app/api/v1/courses/[id]/adapt-pace/route.ts — POST
+- src/app/api/v1/courses/[id]/analytics/revenue/route.ts — GET
+- src/app/api/v1/courses/[id]/approve/route.ts — POST
+- src/app/api/v1/courses/[id]/assignment-groups/route.ts — GET, POST
+- src/app/api/v1/courses/[id]/assignment-groups/[groupId]/route.ts — DELETE, PUT
+- src/app/api/v1/courses/[id]/coauthors/route.ts — DELETE, GET, POST
+- src/app/api/v1/courses/[id]/completion-funnel/route.ts — GET
+- src/app/api/v1/courses/[id]/faqs/route.ts — GET, POST
+- src/app/api/v1/courses/[id]/faqs/[faqId]/route.ts — DELETE, PATCH
+- src/app/api/v1/courses/[id]/feedback/route.ts — GET, POST
+- src/app/api/v1/courses/[id]/feedback-request/route.ts — POST
+- src/app/api/v1/courses/[id]/forum/grade/route.ts — GET, POST
+- src/app/api/v1/courses/[id]/freshness/route.ts — GET
+- src/app/api/v1/courses/[id]/friction/route.ts — GET
+- src/app/api/v1/courses/[id]/friction/ai-suggestions/route.ts — GET, POST
+- src/app/api/v1/courses/[id]/gamification/route.ts — GET, PUT
+- src/app/api/v1/courses/[id]/gradebook/route.ts — GET, PATCH
+- src/app/api/v1/courses/[id]/gradebook/attendance-sync/route.ts — GET, POST
+- src/app/api/v1/courses/[id]/gradebook/bulk/route.ts — POST
+- src/app/api/v1/courses/[id]/gradebook/export/route.ts — GET
+- src/app/api/v1/courses/[id]/gradebook/grade/route.ts — POST
+- src/app/api/v1/courses/[id]/history/route.ts — GET
+- src/app/api/v1/courses/[id]/lessons/route.ts — GET, POST, PUT
+- src/app/api/v1/courses/[id]/lessons/video-library/route.ts — GET
+- src/app/api/v1/courses/[id]/lessons/[lessonId]/route.ts — DELETE, GET, PATCH
+- src/app/api/v1/courses/[id]/lti/grade-passback/route.ts — GET, POST
+- src/app/api/v1/courses/[id]/my-grades/route.ts — GET
+- src/app/api/v1/courses/[id]/objectives/route.ts — GET, POST
+- src/app/api/v1/courses/[id]/objectives/progress/route.ts — GET, POST
+- src/app/api/v1/courses/[id]/practice/route.ts — GET
+- src/app/api/v1/courses/[id]/practice/manage/route.ts — GET, POST
+- src/app/api/v1/courses/[id]/practice/reorder/route.ts — POST
+- src/app/api/v1/courses/[id]/practice/[linkId]/route.ts — DELETE, PATCH
+- src/app/api/v1/courses/[id]/prerequisites/check/route.ts — GET
+- src/app/api/v1/courses/[id]/preview/route.ts — PATCH
+- src/app/api/v1/courses/[id]/prove-it/route.ts — GET, POST
+- src/app/api/v1/courses/[id]/reject/route.ts — POST
+- src/app/api/v1/courses/[id]/reviews/route.ts — GET, POST
+- src/app/api/v1/courses/[id]/revisions/active/route.ts — GET
+- src/app/api/v1/courses/[id]/revisions/pending/route.ts — GET
+- src/app/api/v1/courses/[id]/revisions/[revisionId]/approve/route.ts — POST
+- src/app/api/v1/courses/[id]/revisions/[revisionId]/reject/route.ts — POST
+- src/app/api/v1/courses/[id]/revoke/route.ts — POST
+- src/app/api/v1/courses/[id]/sales-page/route.ts — DELETE, GET, PATCH, POST, PUT
+- src/app/api/v1/courses/[id]/sections/route.ts — GET, PATCH, POST, PUT
+- src/app/api/v1/courses/[id]/skills/route.ts — GET
+- src/app/api/v1/courses/[id]/submit/route.ts — POST
+- src/app/api/v1/enrollments/route.ts — GET, POST
+- src/app/api/v1/enrollments/check/route.ts — GET
+- src/app/api/v1/enrollments/coming-soon/toggle/route.ts — POST
+- src/app/api/v1/enrollments/[id]/route.ts — DELETE, GET, PATCH
+- src/app/api/v1/enrollments/[id]/progress/route.ts — GET, POST
+- src/app/api/v1/incomplete-courses/route.ts — GET
+- src/app/api/v1/learning/adaptive-path/route.ts — GET
+- src/app/api/v1/learning-analytics/route.ts — GET
+- src/app/api/v1/learning-debt/route.ts — GET
+- src/app/api/v1/learning-objectives/route.ts — GET, POST
+- src/app/api/v1/learning-objectives/progress/route.ts — POST
+- src/app/api/v1/learning-objectives/[id]/route.ts — DELETE, GET, PATCH
+- src/app/api/v1/learning-paths/route.ts — GET, POST
+- src/app/api/v1/learning-paths/recommendations/route.ts — GET
+- src/app/api/v1/learning-paths/roadmaps/route.ts — GET
+- src/app/api/v1/learning-paths/[id]/route.ts — DELETE, GET, PATCH
+- src/app/api/v1/learning-paths/[id]/approve/route.ts — POST
+- src/app/api/v1/learning-paths/[id]/courses/[courseId]/route.ts — GET, PATCH
+- src/app/api/v1/learning-paths/[id]/enroll/route.ts — POST
+- src/app/api/v1/learning-paths/[id]/prerequisites/route.ts — GET, PATCH
+- src/app/api/v1/learning-paths/[id]/progress/route.ts — GET, POST
+- src/app/api/v1/lessons/[id]/route.ts — DELETE, PATCH
+- src/app/api/v1/lessons/[id]/bookmarks/route.ts — DELETE, GET, POST
+- src/app/api/v1/lessons/[id]/captions/route.ts — GET, POST
+- src/app/api/v1/lessons/[id]/captions/generate/route.ts — POST
+- src/app/api/v1/lessons/[id]/captions/transcript/route.ts — GET
+- src/app/api/v1/lessons/[id]/captions/vtt/route.ts — GET
+- src/app/api/v1/lessons/[id]/interactive/route.ts — GET, POST
+- src/app/api/v1/lessons/[id]/interactive/blocks/[blockId]/check/route.ts — POST
+- src/app/api/v1/lessons/[id]/interactive/quizzes/[quizId]/answer/route.ts — POST
+- src/app/api/v1/lessons/[id]/interactive/[itemId]/route.ts — DELETE, PATCH
+- src/app/api/v1/lessons/[id]/notes/route.ts — GET, POST
+- src/app/api/v1/lessons/[id]/notes/[noteId]/route.ts — DELETE, PATCH
+- src/app/api/v1/lessons/[id]/practice-links/route.ts — GET, POST
+- src/app/api/v1/lessons/[id]/practice-links/completions/route.ts — GET, POST
+- src/app/api/v1/lessons/[id]/progress/route.ts — POST
+- src/app/api/v1/offline/cache-manifest/route.ts — GET
+- src/app/api/v1/offline/course-manifest/route.ts — GET
+- src/app/api/v1/sections/[id]/route.ts — DELETE, PATCH
+
+## Validation, fields, data and workflow coverage
+
+Field-level rules and traced workflow facts are listed in Findings and cross-referenced in FRD §§9, 11–14. UI versus API versus SQL constraints are not yet reconciled module-wide.
+
+Pending for complete module sign-off: enumerate every screen action; extract route schemas/request/response; trace service calls and table writes; compare Zod rules with UI and migration constraints; record success/error/alternate flows; map tests to stable IDs.
+
+## Dependencies and evidence
+
+Inventory source: docs/frd-analysis/00-repository-inventory.md. Core shared evidence includes src/lib/api/with-api.ts, src/lib/roles.ts and Supabase migrations/RLS. Domain-specific source evidence is cited by repository-relative route and schema paths in Findings and FRD.
+
+## Unresolved questions
+
+Runtime configuration, deployed feature toggles, external-provider response behavior, and uninspected screen/database details remain unverified. No tests are claimed as executed.
